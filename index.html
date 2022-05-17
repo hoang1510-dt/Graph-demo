@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vis Network | Node Styles | Images</title>
+
+    <style type="text/css">
+      #mynetwork {
+        width: 600px;
+        height: 600px;
+        border: 1px solid lightgray;
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
+    ></script>
+
+    <script type="text/javascript">
+      var nodes = null;
+      var edges = null;
+      var network = null;
+
+      var DIR = "./img/refresh-cl/";
+      var EDGE_LENGTH_MAIN = 150;
+      var EDGE_LENGTH_SUB = 50;
+
+      // Called when the Visualization API is loaded.
+      function draw() {
+        // Create a data table with nodes.
+        nodes = [];
+
+        // Create a data table with links.
+        edges = [];
+
+        nodes.push({
+          id: 1,
+          label: "DGH-MX940-YHA-O2J",
+          image: DIR + "router.png",
+          shape: "image",
+        });
+        nodes.push({
+          id: 2,
+          label: "RGW-MX210-MY-T5H",
+          image: DIR + "router.png",
+          shape: "image",
+        });
+        nodes.push({
+          id: 3,
+          label: "RGW-MX210-MY-T5H",
+          image: DIR + "router.png",
+          shape: "image",
+        });
+        edges.push({ from: 1, to: 2, length: EDGE_LENGTH_MAIN, dashes: true  });
+        edges.push({ from: 1, to: 3, length: EDGE_LENGTH_MAIN,
+          color: "green", highlight: "blue"
+        });
+
+        for (var i = 4; i <= 7; i++) {
+          nodes.push({
+            id: i,
+            label: "THJ-MX210-MY-FA2",
+            image: DIR + "switch.png",
+            shape: "image",
+          });
+          edges.push({ from: 2, to: i, length: EDGE_LENGTH_SUB });
+        }
+
+        nodes.push({
+          id: 101,
+          label: "M4S-MX210-MY-5Y",
+          image: DIR + "Hardware-Printer-Blue-icon.png",
+          shape: "image",
+        });
+        edges.push({ from: 2, to: 101, length: EDGE_LENGTH_SUB, color: "red", highlight: "blue" });
+
+        nodes.push({
+          id: 102,
+          label: "NVG-MX210-MY-FA2",
+          image: DIR + "router2.jpg",
+          shape: "image",
+        });
+        edges.push({ from: 3, to: 102, length: EDGE_LENGTH_SUB , dashes: true});
+
+        nodes.push({
+          id: 103,
+          label: "Q3G-MX210-MY-FA2",
+          image: DIR + "Network-Drive-icon.png",
+          shape: "image",
+        });
+        edges.push({ from: 1, to: 103, length: EDGE_LENGTH_SUB, color: "yellow", highlight: "blue" });
+
+        nodes.push({
+          id: 104,
+          label: "XS-MX210-MY-FA2",
+          image: DIR + "switch.jpg",
+          shape: "image",
+        });
+        edges.push({ from: 1, to: 104, length: EDGE_LENGTH_SUB, color: "Yello", highlight: "blue" });
+
+        for (var i = 200; i <= 201; i++) {
+          nodes.push({
+            id: i,
+            label: "AFG-MX210-MY-FA2",
+            image: DIR + "System-Firewall-2-icon.png",
+            shape: "image",
+          });
+          edges.push({ from: 3, to: i, length: EDGE_LENGTH_SUB, color: "green", highlight: "blue" });
+        }
+
+        // create a network
+        var container = document.getElementById("mynetwork");
+        var data = {
+          nodes: nodes,
+          edges: edges,
+        };
+        var options = {
+          interaction: {
+            navigationButtons: true,
+            keyboard: true,
+          },
+        };
+        network = new vis.Network(container, data, options);
+      }
+    </script>
+  </head>
+
+  <body onload="draw()">
+    <p>Display nodes as images.</p>
+    <div id="mynetwork"></div>
+  </body>
+</html>
